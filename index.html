@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free DUCO Faucet</title>
+    <!-- Simple, clean minimalist styling layout -->
+    <link rel="stylesheet" href="https://jsdelivr.net">
+</head>
+<body>
+    <header style="text-align: center; margin-top: 2rem;">
+        <h1>🪙 My Custom Duino-Coin Faucet</h1>
+        <p>Enter your username below to receive free DUCO tokens from my reserve supply!</p>
+    </header>
+
+    <!-- Alert Messaging Popups -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div style="padding: 10px; margin: 10px 0; border-radius: 5px; background: #333; border-left: 5px solid {% if category == 'success' %}#00ff00{% else %}#ff0000{% endif %};">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- Submission Faucet Input Box -->
+    <main style="max-width: 500px; margin: 0 auto;">
+        <form method="POST" style="display: flex; gap: 10px; align-items: flex-end;">
+            <div style="flex-grow: 1;">
+                <label for="username">Duino-Coin Username:</label>
+                <input type="text" id="username" name="username" placeholder="e.g., DucoMiner123" required>
+            </div>
+            <button type="submit" style="height: 40px;">Claim Free DUCO</button>
+        </form>
+
+        <hr style="margin: 2rem 0;">
+
+        <!-- Live Queue List displayed straight back to the administrator/users -->
+        <h3>📋 Active Payout Queue List:</h3>
+        <ul>
+            {% for user in users %}
+                <li><strong>{{ user[0] }}</strong> <span style="opacity: 0.6; font-size: 0.85rem;">(Requested at: {{ user[1] }})</span></li>
+            {% else %}
+                <li style="opacity: 0.5;">No active claims in the database yet. Be the first!</li>
+            {% endfor %}
+        </ul>
+    </main>
+</body>
+</html>
